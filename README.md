@@ -617,6 +617,7 @@ f.close()
 
 
 ## Procedural Programming Data Analysis / 기초적인 절차지향 데이터 분석 예제 프로그램
+### [코드](https://github.com/ninetyfivejae/PythonBasicExamples/tree/master/data_analysis_procedural)
 - 먼저 실행하면 binary 파일 생성함
 ```
 import pickle
