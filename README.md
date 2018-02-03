@@ -731,3 +731,154 @@ evaluateClass(avg, standard_deviation)
 
 f.close()
 ```
+
+## module모듈
+C언어에서는 라이브러리라고 생각하면됨 / 미리 만들어 둔 파일을  import해서 사용
+import하는 파일과 메인 실행 함수가 같은 경로(계층)에 있어야 제대로 작동함
+
+```
+#calc.py
+def Add(a,b):
+    return a+b
+def Subtract(a,b):
+    return a-b
+def Multiply(a,b):
+    return a*b
+def Divide(a,b):
+    return a//b
+```
+## 🇬🇧🇬🇧🇬🇧 import하는 파일이 잘 작동하는지 확인하기위해 테스트코드를 짜는데, 짜놓고 안 지우고 바로 main파일을 실행하면 테스트코드 먼저 출력되고 main파일이 실행됨 그래서 이런 것을 방지하기 위해 다음 라인을 사용함
+```
+// __name__(현재파일의 이름)이 “__main__”(모듈을 import 해서 실행시키는 main주체 파일) 같다면 다음 라인들을 실행하라는 뜻
+if __name__ == "__main__":
+    a = 10
+    b = 5
+    c = Add(a,b)
+    print (c)
+    d = Subtract(a,b)
+    print(d)
+```
+
+- main.py
+- import calc			// 이렇게 하면 calc.Add , calc.Substract 이런식으로 사용해야함
+- from calc import Add Substrac	//이렇게 하면 import한 Add,Substract는 그냥 써서 사용하고,,,import 안 한 Multiply,Divide는 calc.Multiply, calc.Divide로 사용해야함
+
+- from calc import *		// *asterisk는 all을 의미,,,모두 import해서 바로 써주면 됨
+
+```
+a = int(input("Input first number : "))
+b = int(input("Input second number : "))
+
+c = Add(a,b)
+d = Add(a,c)
+e = Subtract(d,c)
+print("{}+{} = {}".format(a,b,c))
+```
+
+## OS module
+```
+dir(os)			// 모든 attributes, methods를 보여준다
+os.getcwd()		// get current working directory
+os.chdir(‘ ’)		// 괄호 안 입력한 경로로 경로변경,,,change directory 
+os.listdir()		// current working directory의 모든 파일, 폴더를 리스트 형태로 반환
+os.mkdir('testfolder')	// make directory
+os.rmdir('testfolder')	// remove directory
+
+with open("test.txt", "wt") as f:	// currentDirectory에 test.txt파일을 만들어 스트링 입력
+    s="Hi Jae"					// 파일이 존재할 시 에러가 나니까 주의할 것
+    f.write(s)
+
+os.rename("test.txt", "testRenamed.txt")
+os.rename("testfolder", "testfolderRenamed")
+
+print(os.stat("testRenamed.txt"))
+		// 이렇게 출력하면 아래와 같이 메소드들이 나오는데,,,이것을 하나씩 반환할 수 있음
+os.stat_result(st_mode=33188, st_ino=2063798, st_dev=16777220, st_nlink=1, st_uid=501, st_gid=20, st_size=6, st_atime=1484927384, st_mtime=1484927384, st_ctime=1484927384)
+
+st_mode : 보호 비트
+st_ino : 아이 노드 번호
+st_dev : 장치
+st_nlink : 하드 링크의 수
+st_uid : 소유자의 사용자 ID
+st_gid : 소유자의 그룹 ID
+st_size : 파일의 크기 (바이트)
+st_atime : 가장 최근에 액세스 시간
+st_mtime : 가장 최근의 내용 수정 시간
+st_ctime : 가장 최근의 메타 데이터 변화의 시간
+print(os.stat("testfolderRenamed").st_size)	// 파일 사이즈를 바이트 단위로 반환
+									// 위에 나오는 메소드들을 이런식으로 출력가능
+```
+```
+#from datetime import *
+#datetime을 import해야지 datetime.fromtimestamp(mod_time) 사용 가능
+mod_time = os.stat("testRenamed.txt").st_mtime	// 파일의 가장 최근 수정 시간을 반환
+print(mod_time)							// 저장된 값을 그래로 출력하고
+print(datetime.fromtimestamp(mod_time))	// 보기좋게 YearMonthDayTime으로 출력
+```
+
+## 🇳🇿🇳🇿🇳🇿os.walk//walk all of directory trees
+```
+🇳🇿🇳🇿🇳🇿트리형태로 경로에 있는 폴더와 파일들을 정리하고 순회함
+🇳🇿🇳🇿🇳🇿순회하는 것을 보고싶어서 직접 출력을 하려면 이렇게 for문을 쓰면 되는데
+🇳🇿🇳🇿🇳🇿변수 3개가 있는 것은, os.walk(“ ”)가 실행되면서 반환하는 변수가 3개로 정해져있기때문에
+현재경로/그 경로의 폴더/그 경로의 파일 을 반환한다는 것을 알기때문에 한 번에 출력하기위해서 이렇게 사용
+for dirpath, dirnames, fnames in os.walk("/Users/jaehyukshin/Desktop/module"):
+    print("Current Path : ", dirpath)
+    print("Directories : ", dirnames)
+    print("Files : ", fnames)
+    print("\n")
+```
+
+## 🇳🇫🇳🇫🇳🇫 하드코딩을 하면 안 된다
+- 내가 직접 경로를 지정하면 다른 사람의 컴퓨터 경로랑 다르기 때문에
+- 환경변수에 등록된 홈 디렉토리를 이용해 코딩을 하면 됨
+```
+print(os.environ)				// 환경변수 목록 반환
+print(os.environ.get('HOME'))		// 환경변수에 등록되어 있는 홈 디렉토리
+
+fpath = os.path.join(os.environ.get('HOME'), 'desktop/text.txt')	// 환경변수에 등록된 홈 디렉토리에 desktop.text.txt 경로를 덧붙인다. 그 경로를 fpath에 스트링으로 할당
+print(fpath)
+
+with open(fpath, 'w') as f:	
+	f.write("python is good. We can do everything!")
+```
+
+## *args (arguments) **kwargs(key arguments)
+- C++에서는 함수Overloading이 있어서 함수이름이 같더라도 매개변수 갯수가 다르면 각각의 함수를 다르게 사용할 수 있음
+- 하지만 Python에서는 매개변수 갯수가 다르더라도 함수 하나로 다 사용되게 설정할 수 있음
+```
+def func1(*args):
+    print(args)
+    for ele in args:
+        print(ele)
+
+def Add(*arg):
+    sum = 0
+    for i in arg:
+        sum+=i
+    return sum
+
+a = 5
+b = 3
+c = 10
+print(Add(a))
+print(Add(a,b))
+print(Add(a,b,c))
+```
+
+```
+def func2(**kwargs):			// Dictionary형태로 매개변수를 받음
+	print(kwargs)
+	for key, value, in kwargs.items():	// kwargs는 Dictionary형태에서 튜플형태로 key&value를 반환함
+		print(“[key:value] >>> {}:{}” .format(key,value))
+
+func2(name = “JaeHyuk”, age = “23”, weight = “70”)
+
+def func3(*args, **kwargs):		// 변수 하나와 Dictionary변수를 같이 받을 때
+    print(args)
+    print(kwargs)
+
+func3(1,2,3,name = "Jae")
+###func3(1,2,name = “Jae”,3)		// 이렇게 하면 안 됨,,,주의
+```
+
