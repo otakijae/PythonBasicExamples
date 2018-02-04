@@ -882,3 +882,207 @@ func3(1,2,3,name = "Jae")
 ###func3(1,2,name = “Jae”,3)		// 이렇게 하면 안 됨,,,주의
 ```
 
+## OOP(Object Oriented Programming)
+- 사람으로 예시
+- data_analysis_OOP 코드 참고
+```
+class Person:		// class : 하나의 종, 종족, 사람이라고 생각
+    #class variable	// class변수 : 클래스로 만든 모든 인스턴스들이 공유하는 변수
+    planet = "Earth"	// 사람이라도 모든 class가 공유하는 특징(변수)가 있음…ex)사람들은 모두 지구에 살고있음
+    
+    def __init__(self, name, age, money):		// initialization…생성자…객체변수 할당 및 초기화 기능
+        self.name = name					// 이런 용도로만 사용하라고 지정한 함수…class내에서 단 하나만 만들 수 있음
+        self.age = age						
+        self.money = money
+
+		🇱🇺🇱🇺🇱🇺다른 함수 내에서 새로운 객체변수를 생성할 수 없고, 변경할 수 없음
+		🇱🇺🇱🇺🇱🇺(C언어에서 private, public과 일맥상통) 하지만, Python에서는 정보은닉을 지원하지 않는다
+		🇱🇺🇱🇺🇱🇺 Documentation에 user의 politeness정중함, 양심에 맡긴다고 나와있음
+
+    def giveMoney(self, other, how_much):	// 객체함수 :  class의 기능이나 행동을 함수로 표현
+        if how_much <= self.money:			
+            self.money -= how_much
+            other.money += how_much
+        else:
+            print("You don't have {}".format(how_much))
+    @staticmethod
+    def SavingCalculator(amount_per_month, months):
+        return amount_per_month * months
+
+		🇱🇺🇱🇺🇱🇺Static Method / 전역함수
+	둘 다 각 객체마다 설정하기 애매한, 누구나 다 사용할 수 있도록 만든 함수이다
+	p1.SavingCalculator()	인스턴스 통해서 함수를 호출하면...static method & 캡슐화
+	SavingCalculator()	그냥 호출하게 되면...전역함수
+	클래스는 관련있는 함수와 변수들이기 때문에 클래스와 관련있을 경우, 클래스 내에 선언을 한다
+	그 함수와 변수를 얼마나 잘 묶어주는지가 캡슐화의 관건이다
+	어디까지 묶을 것인가, 어디부터 다른 클래스로 만들 것인가는 정답이 없고
+	프로그래머의 경험과 역량에 따라 좌우된다.
+	결국 static method나 전역함수나 똑같이 데이터 영역에 저장돼 사용되고 비슷하게 쓰이지만
+	캡슐화의 차이다
+
+    def showInfo(self):			// 객체함수
+        print("I am {}, I have {}won".format(self.name, self.money))
+
+if __name__ == "__main__":      		// int main() 메인함수와 비슷하다고 보면 됨
+    p1 = Person("sanchez", 35, 5000)	// p1, p2를 그 자체로 보면 객체인데
+    p2 = Person("jaehyuk", 23, 2000)	// class입장에서 보면 Person이라는 class로 만든 인스턴스이다
+
+    p1.giveMoney(p2, 3000)			// 함수를 통해서 p1의 데이터를 p2에게 전달…Message Passing…객체간의 데이터 통신
+								// 객체간의 데이터 통신은 반드시 함수를 통해서만 가능
+    p1.showInfo()
+    p2.showInfo()
+```
+
+## 절차지향에서 객체지향으로
+### [코드](https://github.com/ninetyfivejae/PythonBasicExamples/tree/master/data_analysis_OOP)
+```
+import math
+class Evaluate:
+    def average(self, scores):			// 객체함수
+        sum = 0
+        for i in scores:
+            sum+=i
+        return sum / len(scores)
+
+    def variance(self, scores, avg):		// 객체함수
+        variance_sum = 0
+        for i in scores:
+            variance_sum += ((avg-i)**2)
+        return variance_sum / len(scores)
+
+    def evaluateClass(self, avg, std_dev):
+        if avg<50 and std_dev>20:
+            print("성적이 너무 저조하고 학생들의 실력 차이가 너무 크다.")
+        elif avg>50 and std_dev>20:
+            print("성적은 평균이상이지만 학생들 실력 차이가 크다. 주의 요망!")
+        elif avg<50 and std_dev<20:
+            print("학생들간 실력차는 나지 않으나 성적이 너무 저조하다. 주의 요망!")
+        elif avg>50 and std_dev<20:
+            print("성적도 평균 이상이고 학생들의 실력차도 크지 않다.")
+
+if __name__ == "__main__":			// Test Code
+    evaluator = Evaluate()			// 객체생성,,,객체함수는 객체가 생성되지 않으면 사용 불가능,,,initialization초기화함수 없어서 그냥 사용
+    
+    li = [4,4,5,5,7,7,10,10]
+    avg = evaluator.average(li)		// 인스턴스로 객체함수 호출
+    print(avg)
+    var = evaluator.variance(li, avg)
+    print(var)
+```
+```
+from EvaluateClass import Evaluate
+import pickle
+import math
+
+class DataHandler:
+    # class variable 			// 클래스 변수
+    evaluator = Evaluate()		// 객체생성 // 객체합성???######################################
+
+    @staticmethod
+    def GetItemsFromFile(filename):		// Binary파일에서 Dictionary형태의 데이터를 입력받아,,,items리스트에 추가
+        items = []						// items리스트에 개개인의 데이터가 Dictionary형태로 저장 
+        with open(filename, "rb") as f:
+            while 1:
+                try:
+                    data = pickle.load(f)
+                except EOFError:
+                        break
+                items.append(data)
+        return items
+
+    @staticmethod
+    def GetScores(items):				// items리스트에 있는 Dictionary형태의 데이터에서 value값을 따로 빼서 scores리스트에 추가
+        scores = []
+        for i in items:
+            scores.append(list(i.values())[0])
+        return scores
+
+    @staticmethod
+    def GetRawdataInDic(items):
+        rawdata={}
+        for dic in items:
+            a = list(dic.items())
+            rawdata[a[0][0]] = a[0][1]
+        return rawdata
+
+    @staticmethod
+    def GetTheHighest(rawdata):
+        highest =“”
+        highscore = 0
+        for ele in rawdata:
+            if highscore < rawdata[ele]:
+                highest = ele
+                highscore = rawdata[ele]
+        return highest
+
+    @staticmethod
+    def GetTheLowest(rawdata):
+        lowest = “”
+        lowscore = 0
+        for key in rawdata:
+            if rawdata[key] > 0:
+                lowscore = rawdata[key]
+                break
+        for ele in rawdata:
+            if lowscore>= rawdata[ele]:
+                lowest = ele
+                lowscore = rawdata[ele]          
+        return lowest
+
+
+
+    ###생성자 : 객체 변수 모두 초기화	// 객체변수에 계산된 값들을 다 저장하고 메인함수에서 불러내기만 하게 만듬
+
+    def __init__(self, filename, clsname):        
+        #객체 변수
+        self.items = DataHandler.GetItemsFromFile(filename)		// 객체함수가 아니라 static method라서 클라스이름을 통해서 바로 호출함
+        self.scores = DataHandler.GetScores(self.items)			// 객체함수가 아니라 static method라서 클라스이름을 통해서 바로 호출함
+        
+        self.average = round(DataHandler.evaluator.average(self.scores), 1)		//  import한 Evaluate()클래스의 객체함수average()
+        self.variance = round(DataHandler.evaluator.variance(self.scores, self.average), 1)	// import한 Evaluate()클래스의 객체함수variance()
+        self.std_dev = round(math.sqrt(self.variance), 1)					// 표준편차 계산해서 객체변수에 저장
+        self.clsname = clsname
+
+        self.rawdata = DataHandler.GetRawdataInDic(self.items)			// DataHandler의 static method
+        self.highest = DataHandler.GetTheHighest(self.rawdata)			// DataHandler의 static method
+        self.lowest = DataHandler.GetTheLowest(self.rawdata)			// DataHandler의 static method
+
+
+
+    def GetAverage(self):
+        return self.average
+
+    def GetVariance(self):
+        return self.variance
+
+    def GetStandardDeviation(self):
+        return self.std_dev
+
+    def GetEvaluation(self):
+        print('*' * 50)
+        print("%s 반 성적 분석 결과" % self.clsname)
+        print("{0}반의 평균은 {1}점이고 분산은 {2}이며,따라서 표준편차는{3}이다".format(self.clsname, self.average, self.variance, self.std_dev))
+        print('*' * 50)
+        print("%s 반 종합 평가" % self.clsname)
+        print('*' * 50)
+        DataHandler.evaluator.evaluateClass(self.average, self.std_dev)
+        
+    def WhoIsTheHighest(self):
+        return self.highest
+
+    def WhoIsTheLowest(self):
+        return self.lowest
+
+    def GetScoreByName(self, name):
+        return self.rawdata[name]
+```
+```
+from DataHandlerClass import *
+
+dh = DataHandler("class_A.bin", "2-3")		// 생성자에서 선언한 변수의 형태와 같이 호출,,,DataHandler클래스의 인스턴스생성,객체생성
+
+dh.GetEvaluation()						// dh라는 객체를 생성해서, 객체변수를 통해서 객체함수 GetEvaluation()을 호출함
+
+print(dh.WhoIsTheLowest())
+print(dh.WhoIsTheHighest())
+```
