@@ -356,7 +356,7 @@ for i in ['python is', ' easy to learn', ' however powerful’] :	// 이것도 �
 ```
 
 ## 이제 IDLE로 실행하면 편함. 지금까지 본걸로 기초적인 프로그램을 만들 수 있음
-```
+```python
 ###FIZZBUZZ
 num = int(input("<FIZZBUZZ>\nInput number : "))
 for i in range(1,num+1):
@@ -423,7 +423,7 @@ print(anti_vowel(text))
 ```
 
 ## Function
-```
+```python
 def one_dim_func(x):
     y = 3*x+2
     return y
@@ -439,7 +439,7 @@ def func3(x,y):
 
 ## Call by Assignment…immutable인 상수 객체는 참조 안 함
 ## 처음에는 Reference 참조를 받는 것을 원칙으로 하지만, immutable객체를 만나 변경을 시도하면 참조를 할 수 없다고 판단함
-```
+```python
 def func333(a,b):			// Call by Assignment in Python
     z = a+b
     a,b = b,a
@@ -465,7 +465,7 @@ print("a : {} b : {} after function".format(id(a), id(b)))
 
 ## Call by Assignment…mutable인 List객체는 참조를 함
 ## 처음에는 Reference 참조를 받는 것을 원칙으로 하지만, immutable객체를 만나 변경을 시도하면 참조를 할 수 없다고 판단함
-```
+```python
 b = [1,2,3]				// Call by Assignment in Python
 def Func(a):
     a[1] = 7				// List는 변경가능해서 밖의 b리스트를 참조해서 변경시킴
@@ -490,7 +490,7 @@ print("li : " + str(id(li)) + " after function")
 ```
 
 ## LEAP YEAR 윤년 계산
-```
+```python
 def is_leapyear(y):
     leap = False
     if y % 4 == 0 and (y % 100 != 0 or y % 400 == 0):
@@ -512,7 +512,7 @@ print(bleap)
 ```
 
 ## Dictionary	// OpenAddressing&ClosedAddressing
-```
+```python
 dic = {1:['a','b','c'], 2:34, 3:(1,2,3)}
 print(dic)
 
@@ -535,7 +535,7 @@ dic1.get(“KEY값”)		이상한 키값 입력 시 None 반환
 ```
 
 ## Set		// 집합…거의 안 쓸 수 도 있음…
-```
+```python
 s = set( [1,2,3,4] )		// s 출력하면 { } 안에 나타나는데, 리스트나 튜플형태가 아니라는 것임
 s.add(5)				// 순서 없이 들어감
 s.update( [6,7,8] )		// 여러개 넣을 때
@@ -555,7 +555,7 @@ s1.difference(s2)
 ```
 
 ## Write txt file
-```
+```python
 f = open(“test.txt”, “wt”)
 		// wt : write text file		// 다시 실행하면 기존에 있던 파일 지우고 다시 씀
 		// wb : write binary file
@@ -566,7 +566,7 @@ f = open(“test.txt”, “wt”)
 f.close()					// 항상 열여줬으면 닫아야 하고, 안 닫으면 계속 파일이 실행되므로
 ```
 ## Append txt file
-```
+```python
 f = open("test.txt", "at")
 for i in range(4):					// range(4)만 하면 0부터 3까지란 뜻
     data = input("Input string : ")		
@@ -576,14 +576,14 @@ for i in range(4):					// range(4)만 하면 0부터 3까지란 뜻
 f.close()
 ```
 ## Read txt file / read()
-```
+```python
 f = open(“test.txt”, “rt”)	// 이렇게만 해서 파일을 받으면 한줄한줄 받는게 아니라 텍스트 파일 안에 있는 것 전체를 하나의 스트링 객체로 받음
 data = f.read()
 print(data)
 f.close()
 ```
 ## Read txt file / readline()
-```
+```python
 f = open("test.txt", "rt")	// 그래서 한줄한줄씩 받으려면 이렇게 사용
 for i in range(4):		// 줄이 몇줄이 있는지 범위를 알때만 이렇게 사용하고
     data = f.readline()
@@ -591,7 +591,7 @@ for i in range(4):		// 줄이 몇줄이 있는지 범위를 알때만 이렇게 
 f.close()
 ```
 ## Read txt file / readline() until End of file
-```
+```python
 f = open("test.txt", "rt")	// 그래서 결국엔 이렇게 텍스트파일 마지막까지 가서 읽을 라인이 없을 때까지 입력을 받게 설정을 해야함
 while 1:
     data = f.readline()
@@ -602,7 +602,7 @@ while 1:
 f.close()
 ```
 ## Read txt file / readlines()
-```
+```python
 f = open("test.txt", "rt")	
 str_list = f.readlines()	// 텍스트 파일에 있는 한줄한줄의 데이터를 리스트로 불러서 저장
 real_list = []			
@@ -619,7 +619,7 @@ f.close()
 ## Procedural Programming Data Analysis / 기초적인 절차지향 데이터 분석 예제 프로그램
 ### [코드](https://github.com/ninetyfivejae/PythonBasicExamples/tree/master/data_analysis_procedural)
 - 먼저 실행하면 binary 파일 생성함
-```
+```python
 import pickle
 
 f = open("class_A.bin", "wb")
@@ -645,7 +645,7 @@ pickle.dump(data,f)
 f.close()
 ```
 - read binary file
-```
+```python
 import pickle
 f = open("class_A.bin", "rb")
 items = []
@@ -666,7 +666,7 @@ for i in items:			// Dictionary형태로 저장된 데이터이기 때문에
 f.close()
 ```
 - binary 파일 데이터 분석
-```
+```python
 import pickle
 import math
 
@@ -736,7 +736,7 @@ f.close()
 C언어에서는 라이브러리라고 생각하면됨 / 미리 만들어 둔 파일을  import해서 사용
 import하는 파일과 메인 실행 함수가 같은 경로(계층)에 있어야 제대로 작동함
 
-```
+```python
 #calc.py
 def Add(a,b):
     return a+b
@@ -748,7 +748,7 @@ def Divide(a,b):
     return a//b
 ```
 ## 🇬🇧🇬🇧🇬🇧 import하는 파일이 잘 작동하는지 확인하기위해 테스트코드를 짜는데, 짜놓고 안 지우고 바로 main파일을 실행하면 테스트코드 먼저 출력되고 main파일이 실행됨 그래서 이런 것을 방지하기 위해 다음 라인을 사용함
-```
+```python
 // __name__(현재파일의 이름)이 “__main__”(모듈을 import 해서 실행시키는 main주체 파일) 같다면 다음 라인들을 실행하라는 뜻
 if __name__ == "__main__":
     a = 10
@@ -765,7 +765,7 @@ if __name__ == "__main__":
 
 	 from calc import *		// *asterisk는 all을 의미,,,모두 import해서 바로 써주면 됨
 
-```
+```python
 a = int(input("Input first number : "))
 b = int(input("Input second number : "))
 
@@ -776,7 +776,7 @@ print("{}+{} = {}".format(a,b,c))
 ```
 
 ## OS module
-```
+```python
 dir(os)			// 모든 attributes, methods를 보여준다
 os.getcwd()		// get current working directory
 os.chdir(‘ ’)		// 괄호 안 입력한 경로로 경로변경,,,change directory 
@@ -808,7 +808,7 @@ st_ctime : 가장 최근의 메타 데이터 변화의 시간
 print(os.stat("testfolderRenamed").st_size)	// 파일 사이즈를 바이트 단위로 반환
 									// 위에 나오는 메소드들을 이런식으로 출력가능
 ```
-```
+```python
 #from datetime import *
 #datetime을 import해야지 datetime.fromtimestamp(mod_time) 사용 가능
 mod_time = os.stat("testRenamed.txt").st_mtime	// 파일의 가장 최근 수정 시간을 반환
@@ -817,7 +817,7 @@ print(datetime.fromtimestamp(mod_time))	// 보기좋게 YearMonthDayTime으로 �
 ```
 
 ## 🇳🇿🇳🇿🇳🇿os.walk//walk all of directory trees
-```
+```python
 🇳🇿🇳🇿🇳🇿트리형태로 경로에 있는 폴더와 파일들을 정리하고 순회함
 🇳🇿🇳🇿🇳🇿순회하는 것을 보고싶어서 직접 출력을 하려면 이렇게 for문을 쓰면 되는데
 🇳🇿🇳🇿🇳🇿변수 3개가 있는 것은, os.walk(“ ”)가 실행되면서 반환하는 변수가 3개로 정해져있기때문에
@@ -832,7 +832,7 @@ for dirpath, dirnames, fnames in os.walk("/Users/jaehyukshin/Desktop/module"):
 ## 🇳🇫🇳🇫🇳🇫 하드코딩을 하면 안 된다
 - 내가 직접 경로를 지정하면 다른 사람의 컴퓨터 경로랑 다르기 때문에
 - 환경변수에 등록된 홈 디렉토리를 이용해 코딩을 하면 됨
-```
+```python
 print(os.environ)				// 환경변수 목록 반환
 print(os.environ.get('HOME'))		// 환경변수에 등록되어 있는 홈 디렉토리
 
@@ -846,7 +846,7 @@ with open(fpath, 'w') as f:
 ## *args (arguments) **kwargs(key arguments)
 - C++에서는 함수Overloading이 있어서 함수이름이 같더라도 매개변수 갯수가 다르면 각각의 함수를 다르게 사용할 수 있음
 - 하지만 Python에서는 매개변수 갯수가 다르더라도 함수 하나로 다 사용되게 설정할 수 있음
-```
+```python
 def func1(*args):
     print(args)
     for ele in args:
@@ -866,7 +866,7 @@ print(Add(a,b))
 print(Add(a,b,c))
 ```
 
-```
+```python
 def func2(**kwargs):			// Dictionary형태로 매개변수를 받음
 	print(kwargs)
 	for key, value, in kwargs.items():	// kwargs는 Dictionary형태에서 튜플형태로 key&value를 반환함
@@ -885,7 +885,7 @@ func3(1,2,3,name = "Jae")
 ## OOP(Object Oriented Programming)
 - 사람으로 예시
 - data_analysis_OOP 코드 참고
-```
+```python
 class Person:		// class : 하나의 종, 종족, 사람이라고 생각
     #class variable	// class변수 : 클래스로 만든 모든 인스턴스들이 공유하는 변수
     planet = "Earth"	// 사람이라도 모든 class가 공유하는 특징(변수)가 있음…ex)사람들은 모두 지구에 살고있음
@@ -935,7 +935,7 @@ if __name__ == "__main__":      		// int main() 메인함수와 비슷하다고 
 
 ## 절차지향에서 객체지향으로
 ### [코드](https://github.com/ninetyfivejae/PythonBasicExamples/tree/master/data_analysis_OOP)
-```
+```python
 import math
 class Evaluate:
     def average(self, scores):			// 객체함수
@@ -969,7 +969,7 @@ if __name__ == "__main__":			// Test Code
     var = evaluator.variance(li, avg)
     print(var)
 ```
-```
+```python
 from EvaluateClass import Evaluate
 import pickle
 import math
@@ -1076,7 +1076,7 @@ class DataHandler:
     def GetScoreByName(self, name):
         return self.rawdata[name]
 ```
-```
+```python
 from DataHandlerClass import *
 
 dh = DataHandler("class_A.bin", "2-3")		// 생성자에서 선언한 변수의 형태와 같이 호출,,,DataHandler클래스의 인스턴스생성,객체생성
@@ -1087,488 +1087,346 @@ print(dh.WhoIsTheLowest())
 print(dh.WhoIsTheHighest())
 ```
 
+## is -a 상속
+- Computer => Notebook
+- a notebook is a computer
+- Computer로부터 모든 것을 상속받고, notebook만의 새로운 변수와 method가 생김
+- 상속은 말 그대로 모든 변수와 함수를 이어받는 것
 
-
-**### is -a** **상속			// Computer => Notebook // a notebook is a computer**
-
-​					**// Computer로부터 모든 것을 상속받고, notebook만의 새로운 변수와 method가 생김 // 상속은** **말** **그대로** **모든** **변수와** **함수를** **이어받는** **것**
-
+```python
 class computer:
+    def init(self, cpu, mem, keyb, moni):	// 생성자, 초기화 담당
+        self.cpu = cpu
+        self.mem = mem
+        self.keyb = keyb
+        self.moni = moni
 
-​    def __init__(self, cpu, mem, keyb, moni):	// 생성자, 초기화 담당
+    def calc(self):
+        print("calc() in computer")
+        // Derived 클래스에 똑같은 함수가 존재해서, overriding이 된다
+        // 지금 이 Base클래스의 함수는 가려지게 되고, derived클래스의 함수가 실행된다
 
-​        self.cpu = cpu
+    def input(self):
+        print("input is running")
+```
 
-​        self.mem = mem
+- notebook class
 
-​        self.keyb = keyb
-
-​        self.moni = moni
-
-​    **def calc(self):**
-
-​        **print("calc() in computer")**
-
-​		**//** **Derived** **클래스에** **똑같은** **함수가** **존재해서****, overriding****이** **된다**
-
-​		**//** **지금** **이** **Base****클래스의** **함수는** **가려지게** **되고****,** **derived클래스의** **함수가** **실행된다**
-
-​    def input(self):
-
-​        print("input is running")
-
-\#notebook class
-
+```python
 class notebook(computer):
 
-​    def __init__(self, cpu, mem, keyb, moni, **wifi**):	**//** **상속을** **받았기때문에** **굳이** **설정을** **다** **할** **필요가** **없고****, derived****클래스에서만** **사용되는** **변수만** **설정해주면** **된다**
+    // 상속을 받았기때문에 굳이 설정을 다 할 필요가 없고, derived클래스에서만 사용되는 변수만 설정해주면 된다
+    def init(self, cpu, mem, keyb, moni, wifi):	
+        computer.init(self, cpu, mem, keyb, moni)
+        self.wifi = wifi
 
-​        computer.__init__(self, cpu, mem, keyb, moni)
+    def calc(self):
+        //overriding이 됐지만, 굳이 위의 Base클래스의 함수를 사용하고싶으면 이렇게 사용하면 됨 / 상속을 받아서 객체생성 안 해도 됨
+        #computer.calc(self)	
+        print("calc() in notebook")
+		// Base클래스에 똑같은 함수가 존재해서, overriding이 된다
+		// 상속을 해준 base클래스 함수는 가려지게 되고, 지금 이 derived클래스의 함수가 실행된다
+        
+    def calc_com(self):
+        computer.calc(self)
+			// 또 다른 방법으로 가려진 base클래스의 함수를 사용하고 싶으면
+			// 이렇게 wrapper함수로 다른함수의 기능만 가져와 사용하면 된다
 
-​        **self.wifi = wifi**
+if name == "main":
+    laptop = notebook("i5", "8G", "asdf", "Big one", "qualcom")
+    print(laptop.cpu)
+    laptop.calc()
+    laptop.calc_com()
+    laptop.input()
+```
 
-​    **def calc(self):**
+## has-a 상속
 
-​        **#computer.calc(self)	// overriding****이** **됐지만****,** **굳이** **위의 Base클래스의 함수를** **사용하고싶으면** **이렇게** **사용하면** **됨 / 상속을 받아서 객체생성 안 해도 됨**
+- 요즘 거의 사용하지 않고, 객체합성을 사용한다
 
-​        **print("calc() in notebook")**
+```python
+class Gun:
+    def init(self, gunkind = ""):
+        self.gunkind = gunkind
+```
 
-​		**//** **Base클래스에** **똑같은** **함수가** **존재해서****, overriding****이** **된다**
+- has-a 예제
 
-​		**//** **상속을** **해준** **base클래스** **함수는** **가려지게** **되고****,** **지금** **이** **derived클래스의** **함수가** **실행된다**
+```python
+class Policeman(Gun):			// Gun을 상속 받음
+    def init(self, gunkind = ""):	// 빈 문자열은 False
+        if not gunkind:
+            self.gun = None
+        else:
+            self.gun = gunkind
 
-​    def calc_com(self):
-
-​        computer.calc(self)
-
-​			// 또 다른 방법으로 가려진 base클래스의 함수를 사용하고 싶으면
-
-​			// 이렇게 **wrapper****함수**로 다른함수의 기능만 가져와 사용하면 된다
-
-if __name__ == "__main__":
-
-​    laptop = notebook("i5", "8G", "asdf", "Big one", "qualcom")
-
-​    print(laptop.cpu)
-
-​    laptop.calc()
-
-​    laptop.calc_com()
-
-​    laptop.input()
-
-**### has -a		//** **요즘** **거의** **사용하지** **않고****,** **객체합성을** **사용한다**
+if name == "main":
+    p = Policeman("revolver")
+    print(p.gun)				// p.gun = “revolver” (gunkind)
+						// p.gunkind = “revolver” (gunkind)
 
 class Gun:
+    def init(self, gunkind = ""):
+        self.gunkind = gunkind
+```
 
-​    def __init__(self, gunkind = ""):
+- 객체합성 예제
 
-​        self.gunkind = gunkind
+```python
+class Policeman:					// 상속을 안 받고 객체합성
+    def init(self, gunkind = ""):
+        if not gunkind:
+            self.gun = None
+        else:
+            self.gun = Gun(gunkind)     #객체합성,,,Gun클래스의 self.gun이라는 인스턴스 생성
 
-**#has -a**
+if name == "main":
+    p = Policeman("revolver")           #객체합성,,,Policeman클래스의 p라는 인스턴스 생성
+    print(p.gun)				// p.gun은 self.gun=Gun(gunkind)를 가리키기만 해서 주소값이나옴
+    print(p.gun.gunkind)		// (p.gun).gunkind는 (self).gunkind를 가리켜서 gunkind가 출력됨
+```
 
-**class Policeman(Gun):			// Gun****을** **상속** **받음**
+- 예제
 
-​    def __init__(self, gunkind = ""):	// 빈 문자열은 False
+```python
+class Person:
+    #class variable
+    planet = "Earth"
 
-​        if not gunkind:
+def __init__(self,name, age, money):
+    self.name = name
+    self.age = age
+    self.money = money
 
-​            self.gun = None
+def giveMoney(self, other, how_much):
+    if how_much <= self.money:
+        self.money -= how_much
+        other.money += how_much
+    else:
+        print("You don't have {}".format(how_much))
 
-​        else:
+@staticmethod
+def SavingCalculator(amount_per_month, months):
+    return amount_per_month * months
 
-​            **self.gun** = gunkind
+def showInfo(self):
+    print("I am {}, I have {}won".format(self.name, self.money))
+    
+if name == "main":      #similar to // int main()
+    p1 = Person("taehwan", 35, 5000)
+    p2 = Person("jaehyuk", 23, 2000)
+    p1.giveMoney(p2, 3000)
+    p1.showInfo()
+    p2.showInfo()
+```
 
-if __name__ == "__main__":
-
-​    p = Policeman("revolver")
-
-​    print(p.gun)				// p.gun = “revolver” (gunkind)
-
-​						// p.gunkind = “revolver” (gunkind)
-
-class Gun:
-
-​    def __init__(self, gunkind = ""):
-
-​        self.gunkind = gunkind
-
-**#****객체합성**
-
-**class Policeman:					//** **상속을** **안** **받고** **객체합성**
-
-​    def __init__(self, gunkind = ""):
-
-​        if not gunkind:
-
-​            self.gun = None
-
-​        else:
-
-​            self.gun = Gun(gunkind)     #객체합성,,,Gun클래스의 self.gun이라는 인스턴스 생성
-
-if __name__ == "__main__":
-
-​    p = Policeman("revolver")           #객체합성,,,Policeman클래스의 p라는 인스턴스 생성
-
-​    print(p.gun)				// p.gun은 self.gun=Gun(gunkind)를 가리키기만 해서 주소값이나옴
-
-​    print(p.gun.gunkind)		// (p.gun).gunkind는 (self).gunkind를 가리켜서 gunkind가 출력됨
-
-class **Person**:
-
-​    #class variable
-
-​    planet = "Earth"
-
-​    
-
-​    def __init__(self,name, age, money):
-
-​        self.name = name
-
-​        self.age = age
-
-​        self.money = money
-
-​    def giveMoney(self, other, how_much):
-
-​        if how_much <= self.money:
-
-​            self.money -= how_much
-
-​            other.money += how_much
-
-​        else:
-
-​            print("You don't have {}".format(how_much))
-
-​    @staticmethod
-
-​    def SavingCalculator(amount_per_month, months):
-
-​        return amount_per_month * months
-
-​    def showInfo(self):
-
-​        print("I am {}, I have {}won".format(self.name, self.money))
-
-if __name__ == "__main__":      #similar to // int main()
-
-​    p1 = Person("taehwan", 35, 5000)
-
-​    p2 = Person("jaehyuk", 23, 2000)
-
-​    p1.giveMoney(p2, 3000)
-
-​    p1.showInfo()
-
-​    p2.showInfo()
-
+```python
+from class_person import *
+from class_person import *
 from class_person import *
 
-class **Retailer**(**Person**):    		# Person 상속받음
+class Retailer(Person):    		# Person 상속받음
 
-​    #class variable	// 모든 상인들이 가지고 있는 정보라서 Retailer클래스의 클래스변수로 설정
+    #class variable	// 모든 상인들이 가지고 있는 정보라서 Retailer클래스의 클래스변수로 설정
 
-​    price = 1000	// 상인말고 다른 사람들은 몰라도 된다고 가정
+    price = 1000	// 상인말고 다른 사람들은 몰라도 된다고 가정
 
-​    
+    def __init__(self, name, age, money, product):
+    Person.__init__(self, name, age, money)
+    self.product = product
 
-​    def __init__(self, name, age, money, **product**):
+    def Sell(self, other, how_many):
+        if self.product >= how_many and other.money >= self.price*how_many:
+            self.product -= how_many
+            other.product += how_many
 
-​        **Person.__init__(self, name, age, money)**
+            self.money += self.price * how_many
+            other.money -= self.price * how_many
+            #self.giveMoney(other, how_much)를 사용해서 사고 파는 행위를 할 수도 있음
+        else:
+            print("I can't sell it ㅠㅠ")
 
-​        **self.product = product**
+    def showMyInfo(self):
+        print("My name is {name}, {age} years old, and I am a retailer".format(name = self.name, age = self.age))
+        print("I have {0} products and {1} won".format(self.product, self.money))
+```
 
-​    def Sell(self, other, how_many):
-
-​        if self.product >= how_many and other.money >= self.price*how_many:
-
-​            self.product -= how_many
-
-​            other.product += how_many
-
-​            self.money += self.price * how_many
-
-​            other.money -= self.price * how_many
-
-​            #self.giveMoney(other, how_much)를 사용해서 사고 파는 행위를 할 수도 있음
-
-​        else:
-
-​            print("I can't sell it ㅠㅠ")
-
-​    def showMyInfo(self):
-
-​        print("My name is {name}, {age} years old, and I am a retailer".format(name = self.name, age = self.age))
-
-​        print("I have {0} products and {1} won".format(self.product, self.money))
-
+```python
 from class_person import *
+from class_person import *
+from class_person import *
+class Buyer(Person):			# Person 상속받음
+    def init(self, name, age, money, product):
+        Person.init(self, name, age, money)
+        self.product = product
 
-class **Buyer**(**Person**):			# Person 상속받음
+    def Buy(self, other, how_many):
+        if self.money >= other.price * how_many and other.product >= how_many:
+            self.product += how_many
+            other.product -= how_many
 
-​    def __init__(self, name, age, money, **product**):
+            self.money -= other.price * how_many
+            other.money +=other.price * how_many
+            #self.giveMoney(other, how_much)를 사용해서 사고 파는 행위를 구현할 수도 있음
+        else:
+            print("I can't buy it ㅠㅠ")
+        
+    def showMyInfo(self):
+        print("My name is {0}, {1} years old, and I am a buyer".format(self.name, self.age))
+        print("I have {0} products, and {1} won".format(self.product,  self.money))
+```
 
-​        **Person.__init__(self, name, age, money)**
-
-​        **self.product = product**
-
-​    def Buy(self, other, how_many):
-
-​        if self.money >= other.price * how_many and other.product >= how_many:
-
-​            self.product += how_many
-
-​            other.product -= how_many
-
-​            
-
-​            self.money -= other.price * how_many
-
-​            other.money +=other.price * how_many
-
-​            #self.giveMoney(other, how_much)를 사용해서 사고 파는 행위를 구현할 수도 있음
-
-​        else:
-
-​            print("I can't buy it ㅠㅠ")
-
-​            
-
-​    def showMyInfo(self):
-
-​        print("My name is {0}, {1} years old, and I am a buyer".format(self.name, self.age))
-
-​        print("I have {0} products, and {1} won".format(self.product,  self.money))
-
+```python
 from class_person import Person	#Retailer & Buyer에서 다 해놓아서 굳이 메인파일에서 쓸 필요 없음
-
 from class_retailer import Retailer
-
 from class_buyer import Buyer
 
 p1 = Retailer("greg", 35, 10000, 100)
-
 p2 = Buyer("taehwan", 21, 10000, 0)
-
 '''
-
 p1.showMyInfo()     #retailer
-
 print('\n')
-
 p2.showMyInfo()     #buyer
-
 p1.Sell(p2, 3)
-
 p2.Buy(p1, 3)
-
 print('\n')
-
 p1.showMyInfo()
-
 print('\n')
-
 p2.showMyInfo()
-
 '''
-
 p1.giveMoney(p2, 100)       #Person클래스의 객체함수로도 사고 파는 행위를 구현할 수 있음
-
 p1.showInfo()
-
 p2.showInfo()
+```
 
-Derived Class에서의 showMyInfo()가 Base Class의 showMyInfo() 객체함수와 이름이 같으면 overrriding이 돼서 Derived Class의 객체함수가 실행이 됨
+- Derived Class에서의 showMyInfo()가 Base Class의 showMyInfo() 객체함수와 이름이 같으면 overrriding이 돼서 Derived Class의 객체함수가 실행이 됨
 
-**###Decorator Basic**
+## Decorator Basic
 
-🇲🇾**closure**
+### 🇲🇾closure
 
 inner 함수의 인터페이스, 즉 매개변수에 접근할 수 있는 방법이 없네요
-
-**아래와** **같은** **기법을** **통해** **정보** **은닉등을** **구현할** **수** **있습니다** 
-
+아래와 같은 기법을 통해 정보 은닉등을 구현할 수 있습니다 
 하지만 그리 자주 쓰이는 방법은 아닙니다
-
 이러한 기법을 이용해 구현할 수 있는 다른 예는
+유저에게서 필요한 정보만을 제공 받아 (아래 함수에서는 msg)
+특정기능(아래 함수에서는 메세지를 출력하는 기능)은 함수의 설계자가 도맡아할 수 있음
 
-**유저에게서** **필요한** **정보만을** **제공** **받아** **(****아래** **함수에서는** **msg)**
-
-**특정기능****(****아래** **함수에서는** **메세지를** **출력하는** **기능****)****은** **함수의** **설계자가** **도맡아할** **수** **있음**
-
+```python
 import os
 
 def outer(msg):
+    def inner():
+        print (msg)
+    return inner			// inner는 함수를 가리키는 포인터,,,즉 주소값을 가짐
 
-​    **def inner():**
-
-​        **print (msg)**
-
-​    return inner			// inner는 함수를 가리키는 포인터,,,즉 주소값을 가짐
-
-f = outer("abc")		// f라는 객체에 **inner****의** **기능을** **가진** **outer****함수**를 할당
-
+f = outer("abc")		// f라는 객체에 inner의 기능을 가진 outer함수를 할당
 f()
-
 f()
-
 f()
-
 f()
+print(f.name)		// inner를 출력함 outer(msg) or outer(“abc”)는 inner()라는 뜻
+```
 
-print(f.__name__)		// inner를 출력함 outer(msg) or outer(“abc”)는 inner()라는 뜻
+- msg대신에 매개변수가 없는 original function을 넣음
 
-msg대신에 매개변수가 없는 original function을 넣음
-
+```python
 def outer(org_func):
-
-​    **def inner():**
-
-​        **print("inner excuted!")**
-
-​        **return org_func()**
-
-​    return inner
+    def inner():
+        print("inner excuted!")
+        return org_func()
+    return inner
 
 def func1():					// original function
-
-​    print("my name is func1")
+    print("my name is func1")
 
 var1 = outer(func1)		// outer(func1)을 객체에 할당하고,,, 객체가 함수를 가리키는 포인터가 되게함
-
-var1()				// var1 **()** 이걸 붙여주면 함수를 실행하라라는 뜻
-
+var1()				// var1 () 이걸 붙여주면 함수를 실행하라라는 뜻
 var1()
+```
 
-**매개변수를** **이용한** **closure**
+- 매개변수를 이용한 closure
+  - *args, **kwargs 안 쓰면 함수 매개변수 설정시 하나하나 다 적어줘야 하니까
+  - *args, **kwargs 사용
 
-***args, \**kwargs** **안** **쓰면** **함수** **매개변수** **설정시** **하나하나** **다** **적어줘야** **하니까**
-
-***args, \**kwargs** **사용**
-
+```python
 def outer(org_func):
-
-​    **def inner(\*args):			// *args** **리스트** **형태로** **입력받음****???**
-
-​        **print("inner excuted!")		//** **함수가** **호출이** **되면** **항상** **inner****함수가** **먼저** **실행되고**
-
-​        **return** **org_func****(\*args)		//** **그** **다음에** **original****함수가** **실행된다**
-
-​    return inner
+    def inner(*args):			// *args 리스트 형태로 입력받음???
+        print("inner excuted!")		// 함수가 호출이 되면 항상 inner함수가 먼저 실행되고
+        return org_func(*args)		// 그 다음에 original함수가 실행된다
+    return inner
 
 def func2(a, b, c):
-
-​    d = a + b + c
-
-​    print("{} + {} + {} = {} 입니다.".format(a, b, c, d))
+    d = a + b + c
+    print("{} + {} + {} = {} 입니다.".format(a, b, c, d))
 
 var2 = outer(func2)		// 객체를 생성해서
-
 var2(1, 2, 3)			// 객체를 통해서 사용 가능
-
 var2(4, 5, 6)
-
 func2(1,2,3)			// 이렇게 바로  original function으로 사용 가능
+```
 
-**###Decorator**
 
-**Decorator****의** **완성** **//** **미리** **만들어둔** **기능을** **지금** **내가** **설계하는** **함수에** **간단하게** **추가하기**
+###Decorator
+- Decorator의 완성 // 미리 만들어둔 기능을 지금 내가 설계하는 함수에 간단하게 추가하기
 
+```python
 import os
 
 def outer(org_func):
+    def inner(*args, **kwargs):
+        print("추가하려는 기능 실행 시작")
+        print(os.getcwd())
+        print("추가하려는 기능 실행 종료")
+        return org_func(*args, **kwargs)
+    return inner
 
-​    **def inner(\*args, **kwargs):**
-
-​        **print("****추가하려는** **기능** **실행** **시작****")**
-
-​        **print(os.getcwd())**
-
-​        **print("****추가하려는** **기능** **실행** **종료****")**
-
-​        **return org_func(\*args, **kwargs)**
-
-​    return inner
-
-**@outer**
-
+@outer
 def func3(li):
-
-​    sum = 0
-
-​    for l in li:
-
-​        sum += l
-
-​    result = sum//len(li)
-
-​    print("리스트의 평균은 : {}".format(result))
+    sum = 0
+    for l in li:
+        sum += l
+    result = sum//len(li)
+    print("리스트의 평균은 : {}".format(result))
 
 func3([4,4,10,10,12,16])		// @outer데코레이터 붙였으면, 그냥 original함수 호출 시 inner실행됨 
-
 var3 = outer(func3)			// @outer데코레이터가 없을 때 이렇게 객체 생성해서 함수 호출을 함
-
 var3([4, 4, 10, 10, 12, 16])	// @outer데코레이터를 붙이고 이렇게 호출하면 inner가 두번 실행됨
+print(func3.name)		// inner출력,,,func3은 inner를 가리키는 포인터임을 알 수 있음
+```
 
-print(func3.__name__)		// inner출력,,,func3은 inner를 가리키는 포인터임을 알 수 있음
+###Decorator를 직접 만들어서 사용하는 예
 
-**###Decorator****를** **직접** **만들어서** **사용하는** **예**
-
+```python
 def average(func):
-
-​    def inner(*args, **kwargs): 	// args=[ scores=[10,20,20,10], v=[] ]
-
-​        print("made by Jae")
-
-​        li = args[0]            			// li=args[0]=scores=[10,20,20,10]
-
-​        sum = 0
-
-​        for ele in li:
-
-​            sum+=ele
-
-​        mean = sum/len(li)
-
-​        li2 = args[1]           			// li2=args[1]=v=[]
-
-​        li2.append(mean)        		// li2=args[1]=v=[mean]
-
-​        print ("added functionality : mean = {}".format(mean))
-
-​        return func(*args, **kwargs)		// func()는 variance()함수를 가리킴
-
-​    return inner
+    def inner(*args, **kwargs): 	// args=[ scores=[10,20,20,10], v=[] ]
+        print("made by Jae")
+        li = args[0]            			// li=args[0]=scores=[10,20,20,10]
+        sum = 0
+        for ele in li:
+            sum+=ele
+        mean = sum/len(li)
+        li2 = args[1]           			// li2=args[1]=v=[]
+        li2.append(mean)        		// li2=args[1]=v=[mean]
+        print ("added functionality : mean = {}".format(mean))
+        return func(*args, **kwargs)		// func()는 variance()함수를 가리킴
+    return inner
 
 @average
-
 def variance(scores, variance):	// scores=[10,20,20,10],	v=[]
-
-​    mean = variance[0]			// v[0] = mean
-
-​    sum = 0
-
-​    for ele in scores:
-
-​        sum += (ele-mean)**2
-
-​    var = sum / len(scores)
-
-​    variance[0] = var				// mean 평균값
-
-​    print("variance is {}".format(var))
+    mean = variance[0]			// v[0] = mean
+    sum = 0
+    for ele in scores:
+        sum += (ele-mean)**2
+    var = sum / len(scores)
+    variance[0] = var				// mean 평균값
+    print("variance is {}".format(var))
 
 score = [10,20,20,10]
-
 v = []
-
-\#variance = average(variances) // @average데코레이터가 없을 때 이렇게 객체 생성해서 함수 호출을 함
-
+#variance = average(variances) // @average데코레이터가 없을 때 이렇게 객체 생성해서 함수 호출을 함
 variance(score, v)		// @average데코레이터 붙였으면, 그냥 original함수 호출 시 inner실행됨
-
 var = v[0]				
-
 print(var)
+```
+
