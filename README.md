@@ -976,7 +976,7 @@ import math
 
 class DataHandler:
     # class variable 			// 클래스 변수
-    evaluator = Evaluate()		// 객체생성 // 객체합성???######################################
+    evaluator = Evaluate()		// 객체생성 // 객체합성
 
     @staticmethod
     def GetItemsFromFile(filename):		// Binary파일에서 Dictionary형태의 데이터를 입력받아,,,items리스트에 추가
@@ -1113,8 +1113,8 @@ class computer:
 - notebook class
 
 ```python
+//computer 클래스 상속받은 notebook 클래스
 class notebook(computer):
-
     // 상속을 받았기때문에 굳이 설정을 다 할 필요가 없고, derived클래스에서만 사용되는 변수만 설정해주면 된다
     def init(self, cpu, mem, keyb, moni, wifi):	
         computer.init(self, cpu, mem, keyb, moni)
@@ -1153,7 +1153,7 @@ class Gun:
 - has-a 예제
 
 ```python
-class Policeman(Gun):			// Gun을 상속 받음
+class Policeman(Gun):				// Gun을 상속 받음
     def init(self, gunkind = ""):	// 빈 문자열은 False
         if not gunkind:
             self.gun = None
@@ -1163,7 +1163,7 @@ class Policeman(Gun):			// Gun을 상속 받음
 if name == "main":
     p = Policeman("revolver")
     print(p.gun)				// p.gun = “revolver” (gunkind)
-						// p.gunkind = “revolver” (gunkind)
+								// p.gunkind = “revolver” (gunkind)
 
 class Gun:
     def init(self, gunkind = ""):
@@ -1351,7 +1351,7 @@ var1()
 
 ```python
 def outer(org_func):
-    def inner(*args):			// *args 리스트 형태로 입력받음???
+    def inner(*args):				// *args 리스트 형태로 입력받음???
         print("inner excuted!")		// 함수가 호출이 되면 항상 inner함수가 먼저 실행되고
         return org_func(*args)		// 그 다음에 original함수가 실행된다
     return inner
@@ -1367,7 +1367,7 @@ func2(1,2,3)			// 이렇게 바로  original function으로 사용 가능
 ```
 
 
-###Decorator
+### Decorator
 - Decorator의 완성 // 미리 만들어둔 기능을 지금 내가 설계하는 함수에 간단하게 추가하기
 
 ```python
@@ -1390,12 +1390,12 @@ def func3(li):
     print("리스트의 평균은 : {}".format(result))
 
 func3([4,4,10,10,12,16])		// @outer데코레이터 붙였으면, 그냥 original함수 호출 시 inner실행됨 
-var3 = outer(func3)			// @outer데코레이터가 없을 때 이렇게 객체 생성해서 함수 호출을 함
+var3 = outer(func3)				// @outer데코레이터가 없을 때 이렇게 객체 생성해서 함수 호출을 함
 var3([4, 4, 10, 10, 12, 16])	// @outer데코레이터를 붙이고 이렇게 호출하면 inner가 두번 실행됨
-print(func3.name)		// inner출력,,,func3은 inner를 가리키는 포인터임을 알 수 있음
+print(func3.name)				// inner출력,,,func3은 inner를 가리키는 포인터임을 알 수 있음
 ```
 
-###Decorator를 직접 만들어서 사용하는 예
+### Decorator를 직접 만들어서 사용하는 예
 
 ```python
 def average(func):
@@ -1430,3 +1430,72 @@ var = v[0]
 print(var)
 ```
 
+- 객체함수에서 새로운 변수를 생성 및 할당하는게 문법적으로는 되긴하지만,
+  웬만하면 생성자에서 초기화를 하는 것을 추천함
+- 정 객체함수에서 변수의 값을 변경하려고 하면, 생성자에서 변수를 생성하고 0으로 할당해주고 하는게 좋다고함
+
+### Getter/Setter
+- 사용하는 사람은 객체변수로 사용하되, 관리자는 클래스 안에서 객체변수를 보호해줌
+  예를 들어 돈이나 나이는 태어날 때부터 음수일 수가 없기 때문에
+- 이름이 같은 함수는 용납하지 않는데 @property // @—.setter가 있으면, getter/setter로 인정해서 상관없음
+
+```python
+class Person:
+    def init(self, name, money, age):
+        self.name = name
+        self.money = money	// @property 및 @—.setter가 있으면 생성자에서 값을 넣어줄 때
+        self.age = age			// self.money 및 self.age에서 getter/setter로 들어가서 조건을 따짐
+
+#getter
+@property
+def money(self):			// 값을 불러오는 getter,,,매개변수가 따로 필요없음
+    print("getter executed!")
+    return self._money
+
+#setter
+@money.setter
+def money(self, m):			// 값을 설정하는 setter,,,입력받은 값을 매개변수로 설정
+    print("setter executed!")
+    if m < 0:					// 입력받은 값의 조건을 따짐
+        m = 0					// 그대로 값을 받을 것인지, 기본값으로 변경할 것인지 조건을 만듬
+    self._money = m			// 이 값이 생성자의 값에 들어가게됨
+
+#can add age getter/setter
+@property
+def age(self):
+    return self._age
+
+@age.setter
+def age(self, setage):
+    if setage < 0:
+        setage = 0
+    self._age = setage			// 이 값이 생성자의 값에 들어가게됨
+
+def showInfo(self):
+    print("{} has {} won".format(self.name, self.money))	// self.money나 self._money 둘 다 상관없음
+    print("I am {} years old".format(self._age))		// self.age나 self._age 둘 다 상관없음
+    
+    p = Person("Jae", -5000, 23)	// setter실행
+    p.money = 2000					// setter실행
+    p.age = -23						// setter실행
+    p.showInfo()					// getter실행
+    mymoney = p.money				// getter실행
+    print(mymoney)
+    myage = p.age					// getter실행
+    print(myage)
+```
+
+- 리스트 두 개 이상 동시에 for루프 안에 넣을 수 있음
+  짧은 리스트 까지만 실행
+  zip함수 사용해서 같이 돌면 됨
+
+```python
+list_a = [3, 9, 17, 15, 19]
+list_b = [2, 4, 8, 10, 30, 40, 50, 60, 70, 80, 90]
+
+for a, b in zip(list_a, list_b):
+    if a > b:						
+        print a						
+    else:
+        print b
+```
