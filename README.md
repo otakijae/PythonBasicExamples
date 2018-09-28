@@ -1,4 +1,4 @@
-# [Data structure with Python]()
+# [Data structure with Python](https://github.com/ninetyfivejae/PythonBasicExamples/blob/master/data_structure/data_structure.md#data-structure-with-python)
 
 # PythonBasicExamples
 
