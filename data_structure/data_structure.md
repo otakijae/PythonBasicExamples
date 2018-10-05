@@ -11,11 +11,14 @@
 
 - 배열은 할당할 때 크기를 지정해줘야한다는 치명적인 단점이 있음
   데이터를 스택영역에 미리 크기를 만들어서 할당을 하는 방법이기 때문
+
 - 즉, 배열은 한 번 할당을 하면 줄이고 늘릴 수 없기 때문에 LinkedList가 생겼다
+
 - 필요한 데이터가 매 번 다른 경우, 데이터가 늘어나면 바로 이어주기만 하면 되고, 필요 없으면 바로 지워서 다시 참조를 통해 연결시켜주기만 하면 된다.
+
 - 가변배열처럼 탐색, 할당, 복사, 삭제 등의 리소스 낭비가 전혀 없다
 
-​	ex)	int num = 5;
+		ex)	int num = 5;
 		int arr[num]; ==> 이렇게 num이라는 변수를 넣게되면
 					변수는 가변적이라서 에러가 남
 					배열은 고정된 수, 정해진 수, 상수로 지정해줘야 됨
@@ -29,9 +32,9 @@
 
   - Insert	데이터를 어떻게 저장할 것인가?
 
-  - Search	데이터를 어떻게 탐색할 것인가?
+  	 Search	데이터를 어떻게 탐색할 것인가?
 
-  - Delete	데이터를 어떻게 삭제할 것인가?
+  	 Delete	데이터를 어떻게 삭제할 것인가?
 
   - ADT AbstractDataType추상자료형 // 함수를 어떻게 만들건지 UI목록이라고 보면 됨
 
@@ -149,4 +152,219 @@
           print("\n")
   ```
 
-  ​
+
+## Stack, Queue
+
+- 리스트 사용하여 Stack 기능 구현
+
+  ```python
+  class Node:
+      def __init__(self, data):
+          self.data = data
+          self.next = None
+
+  class Stack:
+      #Initialize
+      def __init__(self):
+          self.head = None
+
+      #Check if stack is empty
+      def IsEmpty(self):
+          if not self.head:
+              return True
+          return False
+
+      #insert
+      def push(self, data):
+          newNode = Node(data)
+          newNode.next = self.head
+          self.head = newNode
+
+      #delete & search
+      def pop(self):
+          if self.IsEmpty():  #if not self.head:
+              print("There is no data!")
+              exit(1)
+          delNode = self.head
+          retData = self.head.data
+          self.head = self.head.next
+          del delNode
+          return retData
+
+      #search what data is on the top
+      def peek(self):
+          if self.IsEmpty():  #if not self.head:
+              print("There is no data!")
+              exit(1)
+          retData = self.head.data
+          return retData
+
+  if __name__ == "__main__":
+      stack = Stack()
+
+      stack.push(1)
+      stack.push(2)
+      stack.push(3)
+      stack.push(4)
+      stack.push(5)
+
+      while not stack.IsEmpty():
+          print(stack.pop())
+
+      stack.peek()
+  ```
+
+- 리스트 사용하여 Queue 기능 구현
+
+  ```python
+  class Node:
+      def __init__(self, data):
+          self.data = data
+          self.next = None
+
+  class Queue:
+      #Initialize
+      def __init__(self):
+          self.head = None
+          self.tail = None
+
+      def IsEmpty(self):
+          if not self.head:
+              return True
+          return False
+
+      #insert
+      def Enqueue(self, data):
+          newNode = Node(data)
+          
+          if self.IsEmpty():
+              self.head = newNode
+              self.tail = newNode
+              return
+              
+          self.tail.next = newNode
+          self.tail = newNode
+
+      #delete & search
+      def Dequeue(self):
+          if self.IsEmpty():
+              print("There is no data!")
+              exit(1)
+          delNode = self.head
+          retData = self.head.data
+          self.head = self.head.next
+          del delNode
+          return retData
+
+      def peek(self):
+          if self.IsEmpty():
+              print("There is no data!")
+              exit(1)
+          retData = self.head.data
+          return retData
+
+  if __name__ == "__main__":
+      queue = Queue()
+
+      queue.Enqueue(1)
+      queue.Enqueue(2)
+      queue.Enqueue(3)
+      queue.Enqueue(4)
+      queue.Enqueue(5)
+
+      while not queue.IsEmpty():
+          print(queue.Dequeue())
+
+      queue.peek()
+  ```
+
+## 후위표기법
+
+- 후위표기법 계산기
+  중위표기법으로 수식입력받고, 후위표기법으로 변환한 뒤, 계산하는 클래스
+  수식을 입력받을 때, 한자리수만 입력받는다고 가정하에 만듬
+
+  ```python
+  class Calculator:
+      def __init__(self, exp):
+          self.orgExp = exp.replace(" ", "") 		// 띄어쓰기해도 상관없게 만듬
+          #self.postfixExp = exp
+
+      def GetWeight(self, oprt):
+          if oprt == '*' or oprt == '/':
+              return 9
+          elif oprt =='+' or oprt =='-':
+              return 7
+          elif oprt == '(':
+              return 5
+          else:
+              return -1
+
+      def ConvertToPostfix(self):
+          listExp = []
+          listStack = []
+
+          for ch in self.orgExp:
+              if ch.isdigit():
+                  listExp.append(ch)
+              else:
+                  if self.GetWeight(ch) == 5 or not listStack:
+                      listStack.append(ch)
+                  elif ch == ')':
+                      while 1:
+                          op = listStack.pop()
+                          if op == '(':
+                              break
+                          listExp.append(op)
+                          
+                  elif self.GetWeight(ch) > self.GetWeight(listStack[-1]):
+                      listStack.append(ch)
+                  elif self.GetWeight(ch) == self.GetWeight(listStack[-1]):
+                      listExp.append(listStack.pop())
+                      listStack.append(ch)
+                  elif self.GetWeight(ch) < self.GetWeight(listStack[-1]):
+                      listExp.append(listStack.pop())
+                      listStack.append(ch)
+
+          if listStack:
+              while listStack:
+                  listExp.append(listStack.pop())
+
+          self.postfixExp = "".join(listExp)
+          return self.postfixExp
+
+      def calcTwoOp(self, op1, op2, oprt):
+          if oprt == "+":
+              return op1 + op2
+          elif oprt == "-":
+              return op1 - op2
+          elif oprt == "*":
+              return op1 * op2
+          elif oprt == "/":
+              return op1 // op2
+      
+      def Calculate(self):
+          #list for stack
+          stackOperand = [] //후위표기법 수식에서 2개의 숫자를 임의로 스택에 저장할 용도,연산자만나면 2개 pop해서 계산
+          for ch in self.postfixExp:
+              #If it is a number under 10, prepare calculation
+              if ch.isdigit():
+                  stackOperand.append(int(ch))
+              #If it is an operand which is not number, do calculate
+              else:
+                  op2 = stackOperand.pop()
+                  op1 = stackOperand.pop()
+                  result = self.calcTwoOp(op1, op2, ch)
+                  stackOperand.append(result)
+          return result
+
+  if __name__ == "__main__":
+      calc = Calculator(input("Input : "))
+      print(calc.ConvertToPostfix())
+      result = calc.Calculate()
+      print(result)
+  ```
+
+## Heap
+
+- ​
