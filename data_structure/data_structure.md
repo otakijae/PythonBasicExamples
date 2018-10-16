@@ -19,9 +19,9 @@
 - 가변배열처럼 탐색, 할당, 복사, 삭제 등의 리소스 낭비가 전혀 없다
 
 		ex)	int num = 5;
-		int arr[num]; ==> 이렇게 num이라는 변수를 넣게되면
-					변수는 가변적이라서 에러가 남
-					배열은 고정된 수, 정해진 수, 상수로 지정해줘야 됨
+	​	int arr[num]; ==> 이렇게 num이라는 변수를 넣게되면
+	​				변수는 가변적이라서 에러가 남
+	​				배열은 고정된 수, 정해진 수, 상수로 지정해줘야 됨
 
 - 가변배열은 원래배열에 추가를 시킬 수 있는 것이 아니라 줄이거나 늘릴 메모리 공간을 찾아서(탐색) (할당)하고 원래 데이터를 (복사)하고 (삭제)를 하는 일련의 과정을 거치기 때문에 리소스 낭비가 엄청나다. 어쩔 수 없이 쓸 경우가 있지만 웬만하면 안 쓰는 것이 좋다
 
@@ -39,11 +39,11 @@
   - ADT AbstractDataType추상자료형 // 함수를 어떻게 만들건지 UI목록이라고 보면 됨
 
     DummyLinkedList
-    	생성자
-    	add		void add(data)
-    	first		return data bool
-    	next		return data bool
-    	delete		return data
+    ​	생성자
+    ​	add		void add(data)
+    ​	first		return data bool
+    ​	next		return data bool
+    ​	delete		return data
 
 - linked_list 구현
 
@@ -365,6 +365,191 @@
       print(result)
   ```
 
-## Heap
+## Heap, PriorityQueue
 
-- ​
+- Heap
+
+  ```python
+  class Heap:
+      def GetParentIdx(self, idx):			// 부모노드의 인덱스 반환
+          return idx // 2
+      def GetLeftChildIdx(self, idx):			// 왼쪽자식노드의 인덱스 반환
+          return idx * 2
+      def GetRightChildIdx(self, idx):		// 오른쪽자식노드의 인덱스 반환
+          return idx * 2 + 1
+      
+      def __init__(self, s_min_max = "min"):
+          self.dynamicArr = [None]		// DynamicArray의 역할을 리스트가 하게 설정
+  										// 맨 마지막 노드의 index와 일치시키기 위해 Null값 할당
+          self.numOfData = 0				// heap에서의 노드 갯수
+          
+          if s_min_max == "min":			// 최소 힙 아니면 최대 힙을 나타내는 flag 역할
+              self.min_max = 1			// 1 : min heap(최소 힙), 2 : max heap(최대 힙)
+          elif s_min_max == "max":
+              self.min_max = 2
+          else:
+              self.min_max = 1
+  
+      def IsEmpty(self):				// 노드가 아무 것도 없는지 확인, 데이터가 아무 것도 없는지 확인
+          if self.numOfData == 0:
+              return True
+          return False
+  
+      def GetNumOfData(self):				// 노드의 갯수 반환, 데이터의 갯수 반환
+          return self.numOfData			// 즉, 마지막 노드의 인덱스 반환
+  
+      def IsGoUp(self, idx, data): 		// 새로운 노드를 추가했을 때, 부모노드와 비교해서 위로 올릴지 냅둘지 판단하는 함수
+          if idx == 1:					// 노드의 인덱스가 1인 것은, 노드가 하나만 있고 더이상 올라갈 수 없음을 의미
+              return False
+  
+          value = self.dynamicArr[self.GetParentIdx(idx)] // 현재노드의 데이터와 비교하기 위해 부모노드의 값을 불러옴
+          
+          if self.min_max == 1:		// 최소힙이면 부모노드보다 현재노드 값이 작으면 위로 올리면 됨
+              if value > data:
+                  return True
+              return False
+          elif self.min_max == 2:		// 최대힙이면 부모노드보다 현재노드 값이 크면 위로 올리면 됨
+              if value < data:
+                  return True
+              return False
+      
+      def Insert(self, data):
+          if self.IsEmpty():				// 힙 트리에 아무 노드도 없을 경우 그냥 바로 insert하면 됨
+              self.dynamicArr.append(data)
+              self.numOfData += 1			// 노드가 추가됐으니 데이터 갯수 올림
+              return
+              
+          self.dynamicArr.append(data)		// 힙에서 insert할 때, 새로운 노드는 맨 마지막에 추가시킨 후
+          self.numOfData += 1			// 부모노드와 하나씩 비교하면서 올릴지 냅둘지 결정
+          								// 노드가 추가됐으니 데이터 갯수 올림
+          t_idx = self.numOfData			// 새로 추가된 현재 노드의 인덱스 따로 저장
+          
+  	// 새로 추가된 현재 노드가 올라갈 수 있는지 없는지 함수로 판단해서
+  	// 부모노드에서 내려온 값들은 바로바로 저장을 하면 되지만, 성능향상을 고려해서
+  	// 새로 추가된 노드의 값은 더이상 올라갈 수 없는 부모노드의 위치에 마지막에 한 번만 할당
+  	// 현재노드의 값과 부모노드의 값을 매번 바꿔줄 필요가 없기때문에
+          while self.IsGoUp(t_idx, data):
+              self.dynamicArr[t_idx] = self.dynamicArr[self.GetParentIdx(t_idx)]
+              t_idx = self.GetParentIdx(t_idx)
+  
+      // 마지막에 더이상 올라갈 수 없는 부모노드에 새로 추가된 현재 노드의 값을 넣어주면 된다
+  	// numOfData 값 줄여주기 전에 새로 추가된 데이터 값을 미리 받아놓고 그 값을 넣어주는 것 주의
+  	self.dynamicArr[t_idx] = data
+  
+      def WhichIsPriorChild(self, idx):		// delete하고 부모노드와 자식노드 위치바꾸면서, left와 right 중에서 뭘 비교를 할 지 골라주는 함수
+          left_idx = self.GetLeftChildIdx(idx)		// left자식노드 값 반환
+          right_idx = self.GetRightChildIdx(idx)	// right자식노드 값 반환
+          if left_idx > self.numOfData:			// 단말노드인 경우
+              return -1
+          elif left_idx == self.numOfData:	// 자식노드가 하나만 있고, 마지막 노드인 경우
+              return left_idx
+          elif left_idx < self.numOfData:		// 자식노드가 두 개가 있는 경우이고, 비교를 해서 뭐랑 비교를 할지 골라야함
+              if self.min_max == 1:			// 최소힙이냐 최대힙이냐에 따라 비교를 하는 대상이 달라짐
+                  if self.dynamicArr[left_idx] <= self.dynamicArr[right_idx]:
+                      return left_idx
+                  elif self.dynamicArr[left_idx] > self.dynamicArr[right_idx]:
+                      return right_idx
+              elif self.min_max == 2:
+                  if self.dynamicArr[left_idx] <= self.dynamicArr[right_idx]:
+                      return right_idx
+                  elif self.dynamicArr[left_idx] > self.dynamicArr[right_idx]:
+                      return left_idx
+  
+      def IsGoDown(self, idx, data):		// delete후에 제일 처음으로 올려진 마지막 노드를 내릴지 결정하는 함수
+          child_idx = self.WhichIsPriorChild(idx)	// 비교를 할 자식노드의 인덱스를 따로 저장해둠
+          
+          if child_idx < 0:				// 자식노드가 없다면 바꿔줄 필요가 없음
+              return False
+          
+  		#// 자식노드가 있을 경우
+  		#// 현재노드와 비교를 하기위해 골라낸 자식노드의 값
+          value = self.dynamicArr[self.WhichIsPriorChild(idx)]
+          
+          if self.min_max == 1:
+              if value < data:
+                  return True
+              elif value == data:
+                  return False
+              return False
+          elif self.min_max == 2:
+              if value > data:
+                  return True
+              elif value == data:
+                  return False
+              return False
+              
+      def Delete(self):
+          if self.IsEmpty():				#// 노드가 아무 것도 없으면 지울게 없음
+              print("Nothing to delete")
+              return
+          elif self.numOfData == 1:		#// 노드가 하나면 지우고 값만 반환하고, 노드위치를 바꾸줄 필요가 없음
+              self.numOfData -= 1
+              return self.dynamicArr[1]
+  	
+  	#// 출력하는 제일 위의 노드 값을 미리 저장을 해둠,,,힙트리에서 값을 출력하고 삭제함
+  	#// 삭제 후에 맨 뒤 쪽의 노드 값을 맨 위로 올려서, 자식노드와 하나씩 비교해서 내릴지 결정
+  	retData = self.dynamicArr[1]
+          data = self.dynamicArr[self.numOfData]
+          self.numOfData -= 1
+  
+          t_idx = 1
+          while self.IsGoDown(t_idx, data):
+              self.dynamicArr[t_idx] = self.dynamicArr[self.WhichIsPriorChild(t_idx)]
+              t_idx = self.WhichIsPriorChild(t_idx)
+          self.dynamicArr[t_idx] = data		#// 마지막에 더이상 내려갈 수 없는 자식노드에 오면 현재노드의 값 넣어줌 #// 성능향상을 고려해서
+          return retData
+  
+  
+  if __name__ == "__main__":
+      heap = Heap("min")
+      heap.Insert(3)
+      heap.Insert(5)
+      heap.Insert(1)
+      heap.Insert(10)
+      heap.Insert(8)
+      heap.Insert(7)
+      heap.Insert(4)
+      heap.Insert(5)
+      heap.Insert(2)
+      heap.Insert(6)
+      heap.Insert(9)
+  
+      ndata = heap.GetNumOfData()
+  
+      #insert가 잘 되었는지 테스트 코드
+      for i in range(1, ndata+1):
+          print(heap.dynamicArr[i])
+  
+      print("\n\n")
+  
+      #delete가 잘 되었는지 테스트
+      for i in range(1, ndata+1):
+          print(heap.Delete())
+  ```
+
+- PriorityQueue
+
+  - Heap과 PriorityQueue는 이름만 다르고 완벽하게 동일한 것임
+  - PriorityQueue는 우선순위에 따라 값을 빼서 쓰는 것이기 때문에
+
+  ```python
+  from heap import Heap
+  
+  class PriorityQueue:
+      def __init__(self, s_min_max = "min"):
+          self.heap = Heap(s_min_max)		// 객체합성을 했다고 보면 됨
+  
+      def IsEmpty(self):
+          return self.heap.IsEmpty()
+  
+      def GetNumOfData(self):
+          return self.heap.GetNumOfData()
+  
+      def Enqueue(self, data):
+          self.heap.Insert(data)
+  
+      def Dequeue(self):
+          return self.heap.Delete()
+  ```
+
+- 
